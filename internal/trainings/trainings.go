@@ -95,3 +95,11 @@ func (t Training) ActionInfo() (string, error) {
 	str := fmt.Sprintf("Тип тренировки: %s\nДлительность: %0.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", t.TrainingType, t.Duration.Hours(), distance, avgSpeed, spentKkal)
 	return str, nil
 }
+func (t Training) Print() {
+    info, err := t.ActionInfo()
+    if err != nil {
+        fmt.Printf("Ошибка: %v\n", err)
+        return
+    }
+    fmt.Println(info)
+}

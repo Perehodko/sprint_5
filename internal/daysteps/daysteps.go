@@ -28,6 +28,10 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 	if err != nil {
 		return fmt.Errorf("invalid steps")
 	}
+	
+	if steps <= 0 {
+		return fmt.Errorf("invalid steps")
+	}
 
 	ds.Steps=steps
 
@@ -46,7 +50,7 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 }
 
 func (ds DaySteps) ActionInfo() (string, error) {
-	if ds.Steps < 0 {
+	if ds.Steps <= 0 {
 		return "", fmt.Errorf("invalid steps")
 	}
 
@@ -72,4 +76,13 @@ func (ds DaySteps) ActionInfo() (string, error) {
 	str := fmt.Sprintf("Количество шагов: %d.\nДистанция составила %.2f км.\nВы сожгли %.2f ккал.\n", ds.Steps, distance, spentKkal)
 
 	return str, nil
+}
+
+func (ds DaySteps) Print() {
+    info, err := ds.ActionInfo()
+    if err != nil {
+        fmt.Printf("Ошибка: %v\n", err)
+        return
+    }
+    fmt.Println(info)
 }
