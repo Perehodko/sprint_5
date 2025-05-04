@@ -77,12 +77,3 @@ func (ds DaySteps) ActionInfo() (string, error) {
 
 	return str, nil
 }
-
-func (ds DaySteps) Print() {
-	info, err := ds.ActionInfo()
-	if err != nil {
-		fmt.Printf("Ошибка: %v\n", err)
-		return
-	}
-	fmt.Println(info)
-}
