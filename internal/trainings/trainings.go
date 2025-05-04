@@ -1,19 +1,20 @@
 package trainings
 
-import ( 
-	"time"
-	"strings"
+import (
 	"fmt"
 	"strconv"
-	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
+	"strings"
+	"time"
+
 	"github.com/Yandex-Practicum/tracker/internal/personaldata"
+	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 )
 
 type Training struct {
-	Steps int
+	Steps        int
 	TrainingType string
-	Duration time.Duration
-	Personal personaldata.Personal
+	Duration     time.Duration
+	Personal     personaldata.Personal
 }
 
 func (t *Training) Parse(datastring string) (err error) {
@@ -26,15 +27,15 @@ func (t *Training) Parse(datastring string) (err error) {
 	stepsStr := parts[0]
 	steps, err := strconv.Atoi(stepsStr)
 	if err != nil {
+		return err
+	}
+
+	if steps <= 0 {
 		return fmt.Errorf("invalid steps")
 	}
-	
-	if steps <=0 {
-		return fmt.Errorf("invalid steps")
-	}
-	
-	t.Steps=steps
-	t.TrainingType=parts[1]
+
+	t.Steps = steps
+	t.TrainingType = parts[1]
 
 	durationStr := parts[2]
 	duration, err := time.ParseDuration(durationStr)
@@ -46,7 +47,7 @@ func (t *Training) Parse(datastring string) (err error) {
 		return fmt.Errorf("invalid duration")
 	}
 
-	t.Duration=duration
+	t.Duration = duration
 	return nil
 }
 
@@ -70,7 +71,6 @@ func (t Training) ActionInfo() (string, error) {
 	if t.Duration <= 0 {
 		return "", fmt.Errorf("invalid input: duration must be greater than 0")
 	}
-
 
 	distance := spentenergy.Distance(t.Steps, t.Personal.Height)
 	avgSpeed := spentenergy.MeanSpeed(t.Steps, t.Personal.Height, t.Duration)
@@ -96,10 +96,10 @@ func (t Training) ActionInfo() (string, error) {
 	return str, nil
 }
 func (t Training) Print() {
-    info, err := t.ActionInfo()
-    if err != nil {
-        fmt.Printf("Ошибка: %v\n", err)
-        return
-    }
-    fmt.Println(info)
+	info, err := t.ActionInfo()
+	if err != nil {
+		fmt.Printf("Ошибка: %v\n", err)
+		return
+	}
+	fmt.Println(info)
 }

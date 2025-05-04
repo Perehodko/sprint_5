@@ -1,17 +1,17 @@
 package daysteps
 
-import ( 
-	"time"
-	"strings"
+import (
 	"fmt"
 	"strconv"
-	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
+	"strings"
+	"time"
+
 	"github.com/Yandex-Practicum/tracker/internal/personaldata"
+	"github.com/Yandex-Practicum/tracker/internal/spentenergy"
 )
 
-
 type DaySteps struct {
-	Steps int
+	Steps    int
 	Duration time.Duration
 	Personal personaldata.Personal
 }
@@ -26,26 +26,26 @@ func (ds *DaySteps) Parse(datastring string) (err error) {
 	stepsStr := parts[0]
 	steps, err := strconv.Atoi(stepsStr)
 	if err != nil {
-		return fmt.Errorf("invalid steps")
+		return err
 	}
-	
+
 	if steps <= 0 {
 		return fmt.Errorf("invalid steps")
 	}
 
-	ds.Steps=steps
+	ds.Steps = steps
 
 	durationStr := parts[1]
 	duration, err := time.ParseDuration(durationStr)
 	if err != nil {
-		return fmt.Errorf("invalid duration")
+		return err
 	}
 
 	if duration <= 0 {
 		return fmt.Errorf("invalid duration")
 	}
 
-	ds.Duration=duration
+	ds.Duration = duration
 	return nil
 }
 
@@ -79,10 +79,10 @@ func (ds DaySteps) ActionInfo() (string, error) {
 }
 
 func (ds DaySteps) Print() {
-    info, err := ds.ActionInfo()
-    if err != nil {
-        fmt.Printf("Ошибка: %v\n", err)
-        return
-    }
-    fmt.Println(info)
+	info, err := ds.ActionInfo()
+	if err != nil {
+		fmt.Printf("Ошибка: %v\n", err)
+		return
+	}
+	fmt.Println(info)
 }
