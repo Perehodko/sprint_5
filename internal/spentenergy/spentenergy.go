@@ -15,7 +15,7 @@ const (
 
 func WalkingSpentCalories(steps int, weight, height float64, duration time.Duration) (float64, error) {
 	if steps <= 0 || weight <= 0 || height <= 0 || duration <= 0 {
-		return 0.0, fmt.Errorf("входные параметры некорректны: <0")
+		return 0.0, fmt.Errorf("invalid input parameters: value <= 0")
 	}
 
 	avgSpeed := MeanSpeed(steps, height, duration)
